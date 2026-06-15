@@ -5,7 +5,7 @@ export const rawBuildEntrySchema = z.object({
     datetime: z.string(),
     filename: z.string(),
     id: z.string(),
-    md5: z.string(),
+    md5: z.string().optional(),
     size: z.number(),
     url: z.string(),
     version: z.string(),
@@ -21,7 +21,7 @@ export type RawUpdaterResponse = z.infer<typeof rawUpdaterResponseSchema>;
 export interface BuildEntry {
     filename: string;
     sha256: string;
-    md5: string;
+    md5?: string;
     sizeBytes: number;
     sizeFormatted: string;
     downloadUrl: string;

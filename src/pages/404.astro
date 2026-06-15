@@ -1,0 +1,54 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { buttonVariants } from "@/components/ui/button";
+---
+
+<BaseLayout title="404 | ASCP" description="The page you are looking for does not exist.">
+    <div class="flex flex-col items-center justify-center min-h-[70vh] text-center space-y-6 px-4">
+        <div class="relative">
+            <h1 class="text-8xl md:text-[12rem] font-bold tracking-tighter text-primary/10 select-none">
+                404
+            </h1>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <svg
+                    class="h-12 w-12 md:h-20 md:w-20 text-primary/70"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <path d="M14 2v6h6"></path>
+                    <path d="M9 13h6"></path>
+                    <path d="M9 17h6"></path>
+                </svg>
+            </div>
+        </div>
+
+        <div class="space-y-2 max-w-md mx-auto relative z-10">
+            <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Page Not Found</h2>
+            <p class="text-muted-foreground">
+                Sorry, we couldn&apos;t find the page you&apos;re looking for.
+            </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3 relative z-10">
+            <a href="/" class={buttonVariants({ size: "default", className: "rounded-full font-medium" })}>
+                Back to Home
+            </a>
+            <a
+                href="/devices"
+                class={buttonVariants({
+                    variant: "outline",
+                    size: "default",
+                    className: "rounded-full font-medium",
+                })}
+            >
+                View Devices
+            </a>
+        </div>
+    </div>
+</BaseLayout>

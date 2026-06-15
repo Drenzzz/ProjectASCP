@@ -6,7 +6,10 @@ export const rawDeviceSchema = z.object({
     vendor: z.string(),
     model: z.string(),
     maintainer_name: z.string(),
-    frame: z.string().nullable().optional(),
+    github_username: z.string().optional(),
+    image_url: z.string().optional(),
+    donate_link: z.string().optional(),
+    support_group: z.string().optional(),
     active: z.boolean(),
 });
 
@@ -26,7 +29,9 @@ export interface Device {
     maintainerAvatar: string;
     active: boolean;
     imageUrl?: string;
-    frame?: string | null;
+    githubUsername?: string;
+    donateLink?: string;
+    supportGroup?: string;
 }
 
 export interface DeviceWithBuild extends Device {
@@ -45,14 +50,18 @@ function normalizeCodenameAlt(alt: string | string[] | undefined): string[] {
 }
 
 export function rawToDevice(raw: RawDevice): Device {
+    const githubUsername = raw.github_username ?? raw.maintainer_name;
     return {
         codename: raw.codename,
         codenames: normalizeCodenameAlt(raw.codename_alt),
         brand: raw.vendor,
         name: raw.model,
         maintainer: raw.maintainer_name,
-        maintainerAvatar: `https://github.com/${raw.maintainer_name}.png`,
+        maintainerAvatar: `https://github.com/${githubUsername}.png`,
         active: raw.active,
-        frame: raw.frame ?? null,
+        imageUrl: raw.image_url,
+        githubUsername: raw.github_username,
+        donateLink: raw.donate_link,
+        supportGroup: raw.support_group,
     };
 }

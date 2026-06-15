@@ -1,0 +1,73 @@
+---
+import { marked } from "marked";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DeviceHero from "@/components/device-detail/DeviceHero.astro";
+import BuildInfoCard from "@/components/device-detail/BuildInfoCard.astro";
+import ChecksumBox from "@/components/device-detail/ChecksumBox.astro";
+import { DeviceTabs } from "@/components/device-detail/DeviceTabs";
+import { getDeviceByCodename } from "@/lib/api/devices";
+import { getDeviceInstructions } from "@/lib/api/instructions";
+import { getDeviceChangelog } from "@/lib/api/changelog";
+import { codenameSchema } from "@/lib/validators";
+
+export async function getStaticPaths() {
+    const { getAllDevices } = await import("@/lib/api/devices");
+    const devices = await getAllDevices();
+    return devices.map((d) => ({
+        params: { codename: d.codename },
+    }));
+}
+
+const { codename } = Astro.params;
+const validation = codenameSchema.safeParse(codename);
+if (!validation.success) {
+    return Astro.redirect("/404");
+}
+
+const device = await getDeviceByCodename(validation.data);
+if (!device) {
+    return Astro.redirect("/404");
+}
+
+const [instructionsRaw, changelogRaw] = await Promise.all([
+    getDeviceInstructions(validation.data),
+    getDeviceChangelog(validation.data),
+]);
+
+const instructionsHtml = instructionsRaw ? await marked.parse(instructionsRaw) : "";
+const changelogHtml = changelogRaw ? await marked.parse(changelogRaw) : "";
+
+const latestBuild = device.latestBuild;
+const version = latestBuild?.version;
+const buildDate = latestBuild?.builtDate;
+const fileSize = latestBuild?.sizeFormatted;
+const filename = latestBuild?.filename;
+const md5 = latestBuild?.md5;
+---
+
+<BaseLayout
+    title={`Download ASCP for ${device.name} (${device.codename})`}
+    description={`Get the latest clean Android experience for ${device.name}. Maintained by ${device.maintainer}.`}
+>
+    <DeviceHero device={device} />
+
+    <div class="container px-4 mx-auto py-16 space-y-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in-up">
+            <BuildInfoCard
+                version={version}
+                buildDate={buildDate}
+                fileSize={fileSize}
+                filename={filename}
+            />
+            <ChecksumBox md5={md5} />
+        </div>
+
+        <div class="space-y-8 max-w-5xl mx-auto">
+            <DeviceTabs
+                client:visible
+                instructionsHtml={instructionsHtml}
+                changelogHtml={changelogHtml}
+            />
+        </div>
+    </div>
+</BaseLayout>

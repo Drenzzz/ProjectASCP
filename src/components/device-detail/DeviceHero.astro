@@ -1,0 +1,218 @@
+---
+import type { DeviceWithBuild } from "@/lib/schema/device";
+
+export interface Props {
+    device: DeviceWithBuild;
+}
+
+const { device } = Astro.props;
+const isActive = device.active;
+const maintainerUsername = device.maintainer;
+const maintainerAvatar = `https://github.com/${maintainerUsername}.png`;
+---
+
+<div class="relative min-h-[80vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-black via-background to-black"></div>
+        <div class="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-primary/20 rounded-full blur-[180px] opacity-40 mix-blend-screen animate-pulse"></div>
+        <div class="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[150px] opacity-30 mix-blend-screen"></div>
+        <div
+            class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-50"
+        >
+        </div>
+    </div>
+
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] md:text-[20rem] font-black text-white/[0.02] select-none pointer-events-none z-[1]">
+        ASCP
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent z-10"></div>
+
+    <div class="container relative z-10 px-4 pt-24 lg:pt-20 pb-12 grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
+            <a
+                href="/devices"
+                class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+            >
+                <svg
+                    class="h-4 w-4 group-hover:-translate-x-1 transition-transform"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                Back to devices
+            </a>
+
+            <div class="space-y-6 w-full">
+                <div class="flex items-center justify-center lg:justify-start gap-3 flex-wrap">
+                    <span class="px-3 py-1 text-sm font-mono border border-primary/30 bg-primary/5 text-primary tracking-widest uppercase rounded-full">
+                        {device.codename}
+                    </span>
+                    {
+                        isActive ? (
+                            <span class="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full text-xs font-medium">
+                                Active Maintenance
+                            </span>
+                        ) : (
+                            <span class="bg-secondary text-muted-foreground px-2.5 py-0.5 rounded-full text-xs font-medium">
+                                Discontinued
+                            </span>
+                        )
+                    }
+                </div>
+
+                <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/50 leading-[1.1]">
+                    {device.name}
+                </h1>
+
+                {
+                    device.imageUrl && (
+                        <div class="flex lg:hidden justify-center py-6 w-full">
+                            <div class="relative w-[220px] h-[440px] sm:w-[260px] sm:h-[520px]">
+                                <div class="absolute inset-0 bg-primary/20 rounded-[2.5rem] blur-[40px] opacity-60"></div>
+                                <img
+                                    src={device.imageUrl}
+                                    alt={device.name}
+                                    class="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-10 relative w-full h-full"
+                                />
+                            </div>
+                        </div>
+                    )
+                }
+
+                <div class="flex justify-center lg:justify-start pt-2">
+                    <div class="flex items-center gap-3 lg:gap-5 p-1.5 pr-4 lg:p-2 lg:pr-6 rounded-full bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default">
+                        <div class="relative w-10 h-10 lg:w-16 lg:h-16 rounded-full overflow-hidden ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all">
+                            <img
+                                src={maintainerAvatar}
+                                alt={device.maintainer}
+                                class="object-cover w-full h-full"
+                            />
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[10px] lg:text-xs text-muted-foreground uppercase font-bold tracking-wider mb-0.5 lg:mb-1">
+                                Maintained by
+                            </p>
+                            <a
+                                href={`https://github.com/${maintainerUsername}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                class="text-sm lg:text-xl font-bold leading-none hover:text-primary transition-colors flex items-center gap-2"
+                            >
+                                {device.maintainer}
+                                <svg
+                                    class="h-3 w-3 lg:h-4 lg:w-4 opacity-50"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.74 4.042-1.61 4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-3 lg:gap-4 w-full sm:w-auto">
+                <a
+                    href={device.latestBuild?.downloadUrl ?? "#"}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="h-12 lg:h-16 px-8 lg:px-10 rounded-full text-sm lg:text-lg font-bold shadow-[0_0_40px_-10px_var(--primary)] hover:shadow-[0_0_60px_-10px_var(--primary)] transition-all scale-100 hover:scale-105 w-auto inline-flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90"
+                >
+                    <svg
+                        class="mr-2 lg:mr-3 h-4 w-4 lg:h-6 lg:w-6"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M12 15V3"></path>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <path d="m7 10 5 5 5-5"></path>
+                    </svg>
+                    Download Build
+                </a>
+
+                <div class="flex items-center gap-3">
+                    {
+                        device.supportGroup && (
+                            <a
+                                href={device.supportGroup}
+                                target="_blank"
+                                rel="noreferrer"
+                                title="Support Group"
+                                aria-label="Support Group"
+                                class="h-12 w-12 lg:h-14 lg:w-14 rounded-full border border-white/10 bg-white/5 hover:bg-[#0088cc]/20 hover:text-[#0088cc] hover:border-[#0088cc]/30 transition-all inline-flex items-center justify-center"
+                            >
+                                <svg
+                                    class="h-5 w-5 lg:h-6 lg:w-6"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+                                </svg>
+                            </a>
+                        )
+                    }
+                    {
+                        device.donateLink && (
+                            <a
+                                href={device.donateLink}
+                                target="_blank"
+                                rel="noreferrer"
+                                title="Donate"
+                                aria-label="Donate"
+                                class="h-12 w-12 lg:h-14 lg:w-14 rounded-full border border-white/10 bg-white/5 hover:bg-pink-500/20 hover:text-pink-500 hover:border-pink-500/30 transition-all inline-flex items-center justify-center"
+                            >
+                                <svg
+                                    class="h-5 w-5 lg:h-6 lg:w-6"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.25 2.05C11 4 9.81 3.5 8 3.5A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                                </svg>
+                            </a>
+                        )
+                    }
+                </div>
+            </div>
+        </div>
+
+        {
+            device.imageUrl && (
+                <div class="hidden lg:flex lg:col-span-5 relative justify-center lg:justify-end">
+                    <div class="relative w-[280px] h-[580px] sm:w-[350px] sm:h-[700px] rotate-[-5deg] hover:rotate-0 transition-all duration-700 ease-out group">
+                        <div class="absolute inset-0 bg-primary/20 rounded-[3rem] blur-[60px] group-hover:blur-[80px] transition-all"></div>
+                        <img
+                            src={device.imageUrl}
+                            alt={device.name}
+                            class="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10 relative w-full h-full"
+                        />
+                    </div>
+                </div>
+            )
+        }
+    </div>
+</div>

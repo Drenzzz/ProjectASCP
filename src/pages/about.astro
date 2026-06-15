@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PhilosophyCard from "@/components/about/PhilosophyCard.astro";
+import TeamSection from "@/components/about/TeamSection.astro";
+
+const philosophyItems = [
+    {
+        iconPath: `<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path>`,
+        title: "Our Philosophy",
+        description:
+            "We believe in minimalism. Modern custom ROMs are often bloated with features that slow down the device. ASCP strips away the noise and focuses on what matters: battery life, smoothness, and security.",
+    },
+    {
+        iconPath: `<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path>`,
+        title: "Quality First",
+        description:
+            "Every build goes through rigorous testing before release. We prioritize stability and performance over feature bloat, ensuring your device runs exactly as intended.",
+    },
+];
+---
+
+<BaseLayout
+    title="About | ASCP"
+    description="Learn more about the ASCP Project and the team behind it."
+>
+    <div class="container mx-auto px-4 pt-28 pb-12 space-y-16">
+        <div class="max-w-3xl mx-auto text-center space-y-6">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight">
+                About <span class="text-primary">ASCP</span>
+            </h1>
+            <p class="text-xl text-muted-foreground leading-relaxed">
+                The Project ASCP aims to provide a clean, performant, and stable Android
+                experience close to AOSP but with essential enhancements that power
+                users actually need.
+            </p>
+        </div>
+
+        <div class="h-px w-full max-w-md bg-gradient-to-r from-transparent via-white/10 to-transparent mx-auto"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {
+                philosophyItems.map((item) => (
+                    <PhilosophyCard
+                        iconPath={item.iconPath}
+                        title={item.title}
+                        description={item.description}
+                    />
+                ))
+            }
+        </div>
+
+        <div class="h-px w-full max-w-md bg-gradient-to-r from-transparent via-white/10 to-transparent mx-auto"></div>
+
+        <div class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-3xl font-bold">Meet the Team</h2>
+                <p class="text-muted-foreground">The minds behind the project</p>
+            </div>
+
+            <TeamSection />
+        </div>
+    </div>
+</BaseLayout>

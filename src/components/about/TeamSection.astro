@@ -1,0 +1,24 @@
+---
+import TeamCard from "./TeamCard.astro";
+import { getTeamMembers } from "@/lib/api/team";
+
+const team = await getTeamMembers();
+---
+
+{
+    team.length === 0 ? (
+        <div class="text-center py-10 text-muted-foreground">
+            <p>Failed to load team data.</p>
+        </div>
+    ) : (
+        <div class="flex flex-wrap justify-center gap-4">
+            {
+                team.map((member) => (
+                    <div class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]">
+                        <TeamCard member={member} />
+                    </div>
+                ))
+            }
+        </div>
+    )
+}

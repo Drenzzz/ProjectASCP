@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/common/PageHeader.astro";
+import { DeviceList } from "@/components/devices/DeviceList";
+import { getAllDevices } from "@/lib/api/devices";
+
+const devices = await getAllDevices();
+const initialQuery = Astro.url.searchParams.get("q") ?? "";
+const initialBrand = Astro.url.searchParams.get("brand") ?? "All";
+---
+
+<BaseLayout
+    title="Devices | ASCP"
+    description="Browse all supported devices for ASCP ROM"
+>
+    <div class="pt-20">
+        <PageHeader
+            title="Supported"
+            highlight="Devices"
+            description="Browse officially supported devices and download the latest builds."
+        >
+            <svg
+                slot="icon"
+                class="h-6 w-6 text-primary"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                <path d="M12 18h.01"></path>
+            </svg>
+        </PageHeader>
+
+        <section class="container mx-auto px-4 py-12">
+            <DeviceList
+                client:load
+                initialDevices={devices}
+                initialQuery={initialQuery}
+                initialBrand={initialBrand}
+            />
+        </section>
+    </div>
+</BaseLayout>

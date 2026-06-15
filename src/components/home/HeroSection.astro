@@ -1,0 +1,56 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+---
+
+<section class="relative py-20 md:py-32 overflow-hidden">
+    <div class="container px-4 mx-auto flex flex-col items-center text-center space-y-8 relative z-10">
+        <img
+            src="/logo/ASCP.png"
+            alt="ASCP Logo"
+            width="120"
+            height="120"
+            class="h-28 w-28 md:h-32 md:w-32 rounded-3xl shadow-2xl shadow-primary/30"
+        />
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">
+            PROJECT <span class="text-primary">ASCP</span>
+        </h1>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            The Project ASCP aims to provide a clean, performant, and stable Android experience close to AOSP but with essential enhancements.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+            <a
+                href="/devices"
+                class={buttonVariants({
+                    size: "lg",
+                    className: "h-12 px-8 text-base font-bold rounded-full",
+                })}
+            >
+                Find Your Device
+                <svg
+                    class="ml-2 h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                </svg>
+            </a>
+            <a
+                href="/about"
+                class={buttonVariants({
+                    size: "lg",
+                    variant: "outline",
+                    className: "h-12 px-8 text-base font-bold rounded-full",
+                })}
+            >
+                Learn More
+            </a>
+        </div>
+    </div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px] -z-10 opacity-20 pointer-events-none"></div>
+</section>

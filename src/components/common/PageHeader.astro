@@ -1,0 +1,36 @@
+---
+export interface Props {
+    title: string;
+    highlight: string;
+    description: string;
+    class?: string;
+}
+
+const { title, highlight, description, class: className = "" } = Astro.props;
+---
+
+<section class={`relative py-20 overflow-hidden border-b border-white/5 ${className}`}>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+    <div class="container px-4 mx-auto text-center space-y-6">
+        <div class="inline-flex items-center justify-center p-3 rounded-2xl bg-primary/10 border border-primary/20 mb-4">
+            <slot name="icon">
+                <svg
+                    class="h-6 w-6 text-primary"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+            </slot>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tighter">
+            {title} <span class="text-primary">{highlight}</span>
+        </h1>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">{description}</p>
+    </div>
+</section>

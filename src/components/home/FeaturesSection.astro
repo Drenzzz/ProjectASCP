@@ -1,0 +1,56 @@
+---
+const features = [
+    {
+        title: "Performance First",
+        description: "Optimized kernel and system resources management ensuring smooth UI and better battery life.",
+        iconPath: `<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 12 14z"></path>`,
+    },
+    {
+        title: "Enhanced Privacy",
+        description: "Additional privacy toggles and security patches merged within 24 hours of release.",
+        iconPath: `<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>`,
+    },
+    {
+        title: "Clean UI",
+        description: "A clutter-free interface that respects Material You design guidelines while adding useful customizations.",
+        iconPath: `<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path>`,
+    },
+];
+---
+
+<section class="py-20 bg-secondary/20">
+    <div class="container px-4 mx-auto space-y-16">
+        <div class="text-center space-y-4 max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold">Why Choose ASCP?</h2>
+            <p class="text-muted-foreground text-lg">
+                We focus on what matters most to power users. No bloatware, just pure performance.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {
+                features.map((feature) => (
+                    <div class="rounded-xl border bg-card text-card-foreground shadow-sm bg-background/50 backdrop-blur-sm border-primary/10">
+                        <div class="p-6 space-y-3">
+                            <svg
+                                class="h-10 w-10 text-primary"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <Fragment set:html={feature.iconPath} />
+                            </svg>
+                            <h3 class="text-xl font-semibold tracking-tight">{feature.title}</h3>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-muted-foreground">{feature.description}</p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

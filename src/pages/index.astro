@@ -1,17 +1,21 @@
 ---
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import HeroSection from "@/components/home/HeroSection.astro";
+import FeaturesSection from "@/components/home/FeaturesSection.astro";
+import ScreenshotGallery from "@/components/home/ScreenshotGallery.astro";
+import CTASection from "@/components/home/CTASection.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Project ASCP">
+    <HeroSection />
+    <FeaturesSection />
+
+    <section class="py-10 border-y border-white/5 bg-white/5 backdrop-blur-sm">
+        <div class="container mx-auto px-4 mb-8 text-center">
+            <h3 class="text-3xl md:text-4xl font-bold tracking-widest">Experience The UI</h3>
+        </div>
+        <ScreenshotGallery />
+    </section>
+
+    <CTASection />
+</BaseLayout>

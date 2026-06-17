@@ -32,14 +32,12 @@ export function DeviceCard({
                     "focus-visible:ring-2 focus-visible:ring-primary/50",
                 )}
             >
-                <div className="shrink-0 w-28 h-28 flex items-center justify-center">
+                <div className="shrink-0 w-28 h-28 relative overflow-hidden rounded-2xl bg-white/[0.05] flex items-center justify-center">
                     {imageUrl ? (
                         <img
                             src={imageUrl}
                             alt={name}
-                            width={100}
-                            height={100}
-                            className="object-contain group-hover:scale-110 transition-transform duration-300"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />
                     ) : (
                         <svg

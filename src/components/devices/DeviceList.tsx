@@ -211,6 +211,7 @@ export function DeviceList({ initialDevices, initialQuery, initialBrand }: Devic
                                     maintainer={device.maintainer}
                                     brand={device.brand}
                                     active={device.active}
+                                    imageUrl={device.imageUrl}
                                 />
                             </div>
                         ))}

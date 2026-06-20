@@ -1,14 +1,20 @@
 ---
 import type { DeviceWithBuild } from "@/lib/schema/device";
+import { API_BASE } from "@/lib/api/client";
 
 export interface Props {
     device: DeviceWithBuild;
+    downloadCount?: number;
 }
 
-const { device } = Astro.props;
+const { device, downloadCount = 0 } = Astro.props;
 const isActive = device.active;
 const maintainerUsername = device.maintainer;
 const maintainerAvatar = `https://github.com/${maintainerUsername}.png`;
+
+const bannerUrl = `${API_BASE}/device/${device.codename}/banner/image.png`;
+const displayImage = device.imageUrl || bannerUrl;
+const formatCount = (n: number) => n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
 ---
 
 <div class="relative min-h-[80vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
@@ -66,26 +72,30 @@ const maintainerAvatar = `https://github.com/${maintainerUsername}.png`;
                             </span>
                         )
                     }
+                    {
+                        downloadCount > 0 && (
+                            <span class="bg-primary/10 text-primary border border-primary/20 px-2.5 py-0.5 rounded-full text-xs font-medium font-mono">
+                                {formatCount(downloadCount)} downloads
+                            </span>
+                        )
+                    }
                 </div>
 
                 <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/50 leading-[1.1]">
                     {device.name}
                 </h1>
 
-                {
-                    device.imageUrl && (
-                        <div class="flex lg:hidden justify-center py-6 w-full">
-                            <div class="relative w-[220px] h-[440px] sm:w-[260px] sm:h-[520px]">
-                                <div class="absolute inset-0 bg-primary/20 rounded-[2.5rem] blur-[40px] opacity-60"></div>
-                                <img
-                                    src={device.imageUrl}
-                                    alt={device.name}
-                                    class="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-10 relative w-full h-full"
-                                />
-                            </div>
-                        </div>
-                    )
-                }
+                <div class="flex lg:hidden justify-center py-6 w-full">
+                    <div class="relative w-[220px] h-[440px] sm:w-[260px] sm:h-[520px]">
+                        <div class="absolute inset-0 bg-primary/20 rounded-[2.5rem] blur-[40px] opacity-60"></div>
+                        <img
+                            src={displayImage}
+                            alt={device.name}
+                            class="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-10 relative w-full h-full"
+                            onerror="this.style.display='none'"
+                        />
+                    </div>
+                </div>
 
                 <div class="flex justify-center lg:justify-start pt-2">
                     <div class="flex items-center gap-3 lg:gap-5 p-1.5 pr-4 lg:p-2 lg:pr-6 rounded-full bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default">
@@ -200,19 +210,16 @@ const maintainerAvatar = `https://github.com/${maintainerUsername}.png`;
             </div>
         </div>
 
-        {
-            device.imageUrl && (
-                <div class="hidden lg:flex lg:col-span-5 relative justify-center lg:justify-end">
-                    <div class="relative w-[280px] h-[580px] sm:w-[350px] sm:h-[700px] rotate-[-5deg] hover:rotate-0 transition-all duration-700 ease-out group">
-                        <div class="absolute inset-0 bg-primary/20 rounded-[3rem] blur-[60px] group-hover:blur-[80px] transition-all"></div>
-                        <img
-                            src={device.imageUrl}
-                            alt={device.name}
-                            class="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10 relative w-full h-full"
-                        />
-                    </div>
-                </div>
-            )
-        }
+        <div class="hidden lg:flex lg:col-span-5 relative justify-center lg:justify-end">
+            <div class="relative w-[280px] h-[580px] sm:w-[350px] sm:h-[700px] rotate-[-5deg] hover:rotate-0 transition-all duration-700 ease-out group">
+                <div class="absolute inset-0 bg-primary/20 rounded-[3rem] blur-[60px] group-hover:blur-[80px] transition-all"></div>
+                <img
+                    src={displayImage}
+                    alt={device.name}
+                    class="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10 relative w-full h-full"
+                    onerror="this.style.display='none'"
+                />
+            </div>
+        </div>
     </div>
 </div>

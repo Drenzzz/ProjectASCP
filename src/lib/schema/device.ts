@@ -11,6 +11,8 @@ export const rawDeviceSchema = z.object({
     donate_link: z.string().optional(),
     support_group: z.string().optional(),
     active: z.boolean(),
+    frame: z.string().nullable().optional(),
+    telegram_username: z.string().optional(),
 });
 
 export const rawDevicesResponseSchema = z.object({
@@ -36,6 +38,8 @@ export interface Device {
 
 export interface DeviceWithBuild extends Device {
     latestBuild: import("./updater").BuildEntry | null;
+    incrementalBuild: import("./updater").BuildEntry | null;
+    downloadCount: number;
     changelogUrl: string;
     instructionUrl: string;
 }

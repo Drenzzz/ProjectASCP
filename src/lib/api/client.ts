@@ -6,7 +6,7 @@ const BASE_HOST =
     "https://raw.githubusercontent.com/Pixelify-AOSP/official_devices";
 const BRANCH = import.meta.env.PUBLIC_API_BRANCH ?? "main";
 
-export const API_BASE = `${BASE_HOST}/${BRANCH}/API`;
+export const API_BASE = `${BASE_HOST}/${BRANCH}`;
 
 export async function fetchJSON<T>(
     endpoint: string,

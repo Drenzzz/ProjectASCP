@@ -6,7 +6,7 @@ import {
 } from "@/lib/schema/team";
 
 export async function getTeamMembers(): Promise<Maintainer[]> {
-    const data = await fetchJSON("/team.json", rawTeamResponseSchema);
+    const data = await fetchJSON("/source/team.json", rawTeamResponseSchema);
     if (!data) return [];
     return data.team.map(rawToMaintainer);
 }

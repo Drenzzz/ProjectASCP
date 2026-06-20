@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import PageHeader from "@/components/common/PageHeader.astro";
 import { DeviceList } from "@/components/devices/DeviceList";
 import { getAllDevices } from "@/lib/api/devices";
+import Blob from "@/components/common/Blob.astro";
 
 const devices = await getAllDevices();
 const initialQuery = Astro.url.searchParams.get("q") ?? "";
@@ -13,29 +14,17 @@ const initialBrand = Astro.url.searchParams.get("brand") ?? "All";
     title="Devices | ASCP"
     description="Browse all supported devices for ASCP ROM"
 >
-    <div class="pt-20">
-        <PageHeader
-            title="Supported"
-            highlight="Devices"
-            description="Browse officially supported devices and download the latest builds."
-        >
-            <svg
-                slot="icon"
-                class="h-6 w-6 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-            >
-                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-                <path d="M12 18h.01"></path>
-            </svg>
-        </PageHeader>
+    <div class="relative overflow-hidden">
+        <Blob class="-top-20 -right-20" size="w-80 h-80" opacity={0.06} duration={50} />
+        <Blob class="top-[35%] -left-20" size="w-72 h-72" opacity={0.05} duration={60} reverse={true} />
 
-        <section class="container mx-auto px-4 py-12">
+        <PageHeader
+            title="Supported Devices"
+            description="Browse all supported devices and download the latest builds."
+            class="border-b-0"
+        />
+
+        <section class="container-wide pb-16 relative z-10">
             <DeviceList
                 client:load
                 initialDevices={devices}
@@ -45,3 +34,4 @@ const initialBrand = Astro.url.searchParams.get("brand") ?? "All";
         </section>
     </div>
 </BaseLayout>
+

@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface StatusBadgeProps {
@@ -8,22 +7,23 @@ interface StatusBadgeProps {
 
 const STATUS_STYLES: Record<StatusBadgeProps["status"], string> = {
     Active:
-        "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+        "bg-emerald-600 text-white shadow-xs",
     Inactive:
-        "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20",
+        "bg-gray-100 text-gray-500",
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
     return (
-        <Badge
-            variant="outline"
+        <span
             className={cn(
-                "font-mono font-medium border px-2.5 py-0.5",
+                "inline-flex items-center gap-1.5 h-5.5 w-fit shrink-0 px-2.5 py-0.5 text-xs font-bold rounded-full select-none",
                 STATUS_STYLES[status],
                 className,
             )}
         >
             {status}
-        </Badge>
+        </span>
     );
 }
+
+

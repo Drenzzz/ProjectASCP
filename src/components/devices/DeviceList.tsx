@@ -78,14 +78,14 @@ export function DeviceList({ initialDevices, initialQuery, initialBrand }: Devic
 
     if (initialDevices.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center py-24 text-center space-y-6 border border-dashed border-destructive/20 rounded-3xl bg-destructive/5">
-                <div className="p-4 rounded-full bg-background shadow-sm ring-1 ring-border">
+            <div className="flex flex-col items-center justify-center py-24 text-center space-y-6">
+                <div className="p-4 rounded-2xl bg-gray-100">
                     <svg
-                        className="h-10 w-10 text-muted-foreground"
+                        className="h-10 w-10 text-gray-400"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
+                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                         aria-hidden="true"
@@ -100,8 +100,8 @@ export function DeviceList({ initialDevices, initialQuery, initialBrand }: Devic
                     </svg>
                 </div>
                 <div className="space-y-2 max-w-md mx-auto px-4">
-                    <h3 className="text-xl font-bold tracking-tight">Unable to load devices</h3>
-                    <p className="text-muted-foreground">
+                    <h3 className="text-xl font-bold text-gray-900">Unable to load devices</h3>
+                    <p className="text-gray-500">
                         We couldn&apos;t fetch the device list from the server. Check your
                         connection or try again later.
                     </p>
@@ -110,7 +110,7 @@ export function DeviceList({ initialDevices, initialQuery, initialBrand }: Devic
                     onClick={handleRetry}
                     disabled={isRetrying}
                     size="lg"
-                    className="rounded-full font-bold"
+                    className="rounded-xl font-bold"
                 >
                     <svg
                         className={cn("mr-2 h-4 w-4", isRetrying && "animate-spin")}
@@ -132,17 +132,17 @@ export function DeviceList({ initialDevices, initialQuery, initialBrand }: Devic
     }
 
     return (
-        <div className="space-y-10">
+        <div className="space-y-8">
             <div className="space-y-6">
                 <div className="relative max-w-md mx-auto">
                     <svg
-                        className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                        className="absolute left-4.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-gray-400 pointer-events-none"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         aria-hidden="true"
                     >
                         <circle cx="11" cy="11" r="8"></circle>
@@ -153,7 +153,7 @@ export function DeviceList({ initialDevices, initialQuery, initialBrand }: Devic
                         placeholder="Search device, codename, or maintainer..."
                         value={query}
                         onChange={(e) => handleQueryChange(e.target.value)}
-                        className="pl-11 h-12 rounded-full bg-white/[0.03] border-white/10 focus-visible:border-primary/50 focus-visible:bg-white/[0.05] transition-all shadow-sm placeholder:text-muted-foreground/50"
+                        className="pl-12 h-12 rounded-full bg-gray-100/70 hover:bg-gray-100 border-0 focus-visible:bg-white focus-visible:ring-4 focus-visible:ring-primary/10 shadow-xs focus-visible:shadow-md transition-all placeholder:text-gray-400 text-sm outline-none"
                     />
                 </div>
 
@@ -166,49 +166,52 @@ export function DeviceList({ initialDevices, initialQuery, initialBrand }: Devic
 
             <div className="min-h-[300px]">
                 {filteredDevices.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 border border-dashed border-white/10 rounded-2xl bg-white/[0.02]">
-                        <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                    <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+                        <div className="p-4 rounded-2xl bg-gray-100">
                             <svg
-                                className="h-8 w-8 text-muted-foreground"
+                                className="h-8 w-8 text-gray-400"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="2"
+                                stroke-width="1.5"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 aria-hidden="true"
                             >
-                                <path d="M12.267 19.79a.5.5 0 0 0 .466 0l-7.733-4.06A.5.5 0 0 0 5 15.413V8.587a.5.5 0 0 0 .267-.42Z"></path>
-                                <path d="m14 6.5 6.733 3.532a.5.5 0 0 1 .267.42v6.864a.5.5 0 0 1-.267.42L14 21.07"></path>
-                                <path d="m14 6.5-3.733 9.477"></path>
-                                <path d="M14 6.5 3.733 10.023a.5.5 0 0 0-.267.42v6.864a.5.5 0 0 0 .267.42L10.733 21.07"></path>
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
                             </svg>
                         </div>
                         <div className="space-y-1">
-                            <p className="text-lg font-medium">No devices found</p>
-                            <p className="text-muted-foreground">
+                            <p className="text-lg font-medium text-gray-900">No devices found</p>
+                            <p className="text-gray-500">
                                 Try adjusting your search or filter criteria.
                             </p>
                         </div>
                         <Button
                             variant="outline"
                             onClick={handleClearSearch}
-                            className="mt-4 rounded-full"
+                            className="mt-4 rounded-xl"
                         >
                             Clear Search
                         </Button>
                     </div>
                 ) : (
-                    <div className="flex flex-wrap justify-center gap-4">
-                        {filteredDevices.map((device) => (
+                    <div key={activeBrand} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filteredDevices.map((device, index) => (
                             <div
                                 key={device.codename}
-                                className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]"
+                                className="animate-fade-in-up"
+                                style={{
+                                    animationDelay: `${index * 40}ms`,
+                                }}
                             >
                                 <DeviceCard
                                     name={device.name}
                                     codename={device.codename}
                                     maintainer={device.maintainer}
+                                    maintainerAvatar={device.maintainerAvatar}
+                                    githubUsername={device.githubUsername}
                                     brand={device.brand}
                                     active={device.active}
                                     imageUrl={device.imageUrl}

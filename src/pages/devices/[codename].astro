@@ -8,6 +8,7 @@ import { DeviceTabs } from "@/components/device-detail/DeviceTabs";
 import { getDeviceByCodename } from "@/lib/api/devices";
 import { getDeviceInstructions } from "@/lib/api/instructions";
 import { getDeviceChangelog } from "@/lib/api/changelog";
+import { getDeviceDownloadCount } from "@/lib/api/download-stats";
 import { codenameSchema } from "@/lib/validators";
 
 export async function getStaticPaths() {
@@ -29,9 +30,10 @@ if (!device) {
     return Astro.redirect("/404");
 }
 
-const [instructionsRaw, changelogRaw] = await Promise.all([
+const [instructionsRaw, changelogRaw, downloadCount] = await Promise.all([
     getDeviceInstructions(validation.data),
     getDeviceChangelog(validation.data),
+    getDeviceDownloadCount(validation.data),
 ]);
 
 const instructionsHtml = instructionsRaw ? await marked.parse(instructionsRaw) : "";
@@ -49,7 +51,7 @@ const md5 = latestBuild?.md5;
     title={`Download ASCP for ${device.name} (${device.codename})`}
     description={`Get the latest clean Android experience for ${device.name}. Maintained by ${device.maintainer}.`}
 >
-    <DeviceHero device={device} />
+    <DeviceHero device={device} downloadCount={downloadCount} />
 
     <div class="container px-4 mx-auto py-16 space-y-16">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in-up">
@@ -67,6 +69,8 @@ const md5 = latestBuild?.md5;
                 client:visible
                 instructionsHtml={instructionsHtml}
                 changelogHtml={changelogHtml}
+                fullBuild={device.latestBuild}
+                incrementalBuild={device.incrementalBuild}
             />
         </div>
     </div>

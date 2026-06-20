@@ -5,8 +5,6 @@
 @import "./tokens.css";
 @import "./markdown.css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: 'Google Sans Flex Variable', sans-serif;
@@ -53,21 +51,48 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
+  }
   body {
     @apply bg-background text-foreground;
-    }
+  }
   html {
     @apply font-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-feature-settings: "ss03";
-    }
+  }
   h1, h2, h3, h4, h5, h6 {
     text-wrap: balance;
-    }
+  }
   p {
     text-wrap: pretty;
-    }
+  }
+}
+
+@layer utilities {
+  .container-wide {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 1.5rem);
+  }
+  .container-narrow {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 1.5rem);
+  }
+  .section-y {
+    padding-block: var(--section-padding-y);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

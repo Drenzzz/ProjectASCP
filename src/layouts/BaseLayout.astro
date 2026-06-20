@@ -39,4 +39,14 @@ const {
         </main>
         <Footer />
     </body>
+    <script>
+        import { initLenis, registerRevealObserver } from "@/lib/motion";
+        // Init on first load
+        initLenis();
+        registerRevealObserver();
+        // Re-run reveals on Astro view transitions if added later
+        document.addEventListener("astro:page-load", () => {
+            registerRevealObserver();
+        });
+    </script>
 </html>

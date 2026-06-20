@@ -1,0 +1,42 @@
+---
+/**
+ * Organic blob decorative element.
+ * DESIGN.md §8 — cyan-teal at 5-12% opacity, slow rotation, aria-hidden.
+ * Max 2-3 blobs per page.
+ */
+interface Props {
+  class?: string;
+  size?: string;   // tailwind w/h classes, e.g. "w-64 h-64"
+  opacity?: number; // 0.05 – 0.12 per spec
+  duration?: number; // rotation seconds
+  reverse?: boolean;
+}
+
+const {
+  class: className = "",
+  size = "w-56 h-56",
+  opacity = 0.08,
+  duration = 45,
+  reverse = false,
+} = Astro.props;
+
+const fill = `oklch(0.48 0.13 200 / ${opacity})`;
+const animDir = reverse ? "spin-reverse" : "spin-slow";
+---
+
+<div
+  class:list={["absolute pointer-events-none", size, className]}
+  aria-hidden="true"
+>
+  <svg
+    viewBox="0 0 200 200"
+    class:list={["w-full h-full", animDir === "spin-slow" ? "animate-[spin_45s_linear_infinite]" : "animate-[spin_45s_linear_infinite_reverse]"]}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill={fill}
+      d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.5,90,-16.3,88.1,-0.8C86.2,14.7,79.9,29.4,71.2,41.6C62.5,53.8,51.4,63.5,38.6,70.2C25.8,76.9,11.3,80.5,-2.9,85C-17.1,89.5,-34.2,94.9,-47.1,89.1C-60,83.3,-68.7,66.3,-74.7,49.8C-80.7,33.3,-84,17.7,-83.7,0.8C-83.4,-16.1,-79.5,-32.1,-71.2,-44.8C-62.9,-57.5,-50.2,-66.9,-37,-74.1C-23.8,-81.3,-10.1,-86.3,2.8,-90.8C15.7,-95.3,30.6,-83.6,44.7,-76.4Z"
+      transform="translate(100 100)"
+    />
+  </svg>
+</div>

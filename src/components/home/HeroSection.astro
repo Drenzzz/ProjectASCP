@@ -1,56 +1,90 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
+import Blob from "@/components/common/Blob.astro";
+import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
 ---
 
-<section class="relative py-20 md:py-32 overflow-hidden">
-    <div class="container px-4 mx-auto flex flex-col items-center text-center space-y-8 relative z-10">
-        <img
-            src="/logo/ASCP.png"
-            alt="ASCP Logo"
-            width="120"
-            height="120"
-            class="h-28 w-28 md:h-32 md:w-32 rounded-3xl shadow-2xl shadow-primary/30"
-        />
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">
-            PROJECT <span class="text-primary">ASCP</span>
-        </h1>
-        <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            The Project ASCP aims to provide a clean, performant, and stable Android experience close to AOSP but with essential enhancements.
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-4">
-            <a
-                href="/devices"
-                class={buttonVariants({
-                    size: "lg",
-                    className: "h-12 px-8 text-base font-bold rounded-full",
-                })}
+<section class="relative overflow-hidden min-h-[70vh] flex items-center py-24 md:py-32">
+    <!-- Decorative blobs -->
+    <Blob class="-top-20 -right-20" size="w-80 h-80" opacity={0.07} duration={50} />
+    <Blob class="-bottom-16 -left-16" size="w-56 h-56" opacity={0.05} duration={60} reverse={true} />
+
+    <div class="container-wide relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+
+            <!-- Text column — left -->
+            <div
+                class="flex flex-col items-center md:items-start text-center md:text-left space-y-6"
+                data-reveal-stagger="0.12"
             >
-                Find Your Device
-                <svg
-                    class="ml-2 h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
+                <!-- Heading -->
+                <div data-reveal-child>
+                    <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-gray-900">
+                        Project&nbsp;<SquiggleUnderline>ASCP</SquiggleUnderline>
+                    </h1>
+                </div>
+
+                <!-- Description -->
+                <p
+                    class="text-lg md:text-xl text-gray-500 max-w-lg leading-relaxed"
+                    data-reveal-child
                 >
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                </svg>
-            </a>
-            <a
-                href="/about"
-                class={buttonVariants({
-                    size: "lg",
-                    variant: "outline",
-                    className: "h-12 px-8 text-base font-bold rounded-full",
-                })}
-            >
-                Learn More
-            </a>
+                    AOSP-based Android ROM built for performance and privacy.
+                    Clean, fast, and actively maintained — close to stock with the right additions.
+                </p>
+
+                <!-- CTA row -->
+                <div class="flex flex-wrap items-center gap-4 pt-2" data-reveal-child>
+                    <a
+                        href="/devices"
+                        class={buttonVariants({
+                            size: "lg",
+                            className: "h-12 px-8 text-base font-bold rounded-full gap-2",
+                        })}
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 15V3"></path>
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <path d="m7 10 5 5 5-5"></path>
+                        </svg>
+                        Download
+                    </a>
+                    <a
+                        href="/about"
+                        class={buttonVariants({
+                            size: "lg",
+                            variant: "outline",
+                            className: "h-12 px-8 text-base font-bold rounded-full",
+                        })}
+                    >
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Logo column — right, always right on md+ -->
+            <div class="flex justify-center md:justify-end" data-reveal data-reveal-delay="0.15">
+                <!-- Elevated card recipe — solid surface, no glow -->
+                <div class="relative bg-white rounded-3xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-shadow duration-300">
+                    <img
+                        src="/logo/ASCP.png"
+                        alt="ASCP Logo"
+                        width="220"
+                        height="220"
+                        class="h-44 w-44 md:h-56 md:w-56 rounded-2xl"
+                    />
+                    <!-- Doodle arrow accent -->
+                    <svg
+                        class="absolute -bottom-4 -right-4 w-10 h-10 text-primary/25 rotate-45"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
         </div>
     </div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px] -z-10 opacity-20 pointer-events-none"></div>
 </section>

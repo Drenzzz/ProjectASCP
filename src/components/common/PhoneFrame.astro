@@ -1,0 +1,45 @@
+---
+/**
+ * Phone mockup frame wrapper for screenshots.
+ * Renders a rounded bezel with notch/punch-hole, dark frame.
+ * Drop the screenshot image as a slot child.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div class:list={["relative select-none", className]}>
+  <!-- Outer bezel -->
+  <div class="relative rounded-[2.2rem] bg-gray-900 p-[3px] shadow-lg ring-1 ring-white/10">
+    <!-- Screen area -->
+    <div class="relative overflow-hidden rounded-[1.9rem] bg-black aspect-[9/19.5]">
+      <!-- Punch-hole notch -->
+      <div
+        class="absolute top-3 left-1/2 -translate-x-1/2 w-[13%] h-[3%] bg-gray-900 rounded-full z-10"
+        aria-hidden="true"
+      ></div>
+      <!-- Screenshot -->
+      <slot />
+    </div>
+    <!-- Side buttons (decorative) -->
+    <div
+      class="absolute -right-[5px] top-[18%] w-[5px] h-[8%] bg-gray-700 rounded-r-sm"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute -right-[5px] top-[29%] w-[5px] h-[12%] bg-gray-700 rounded-r-sm"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute -left-[5px] top-[22%] w-[5px] h-[6%] bg-gray-700 rounded-l-sm"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute -left-[5px] top-[31%] w-[5px] h-[10%] bg-gray-700 rounded-l-sm"
+      aria-hidden="true"
+    ></div>
+  </div>
+</div>

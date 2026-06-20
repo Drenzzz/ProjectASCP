@@ -3,19 +3,16 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import HeroSection from "@/components/home/HeroSection.astro";
 import FeaturesSection from "@/components/home/FeaturesSection.astro";
 import ScreenshotGallery from "@/components/home/ScreenshotGallery.astro";
+import StatsSection from "@/components/home/StatsSection.astro";
+import { FAQSection } from "@/components/home/FAQSection";
 import CTASection from "@/components/home/CTASection.astro";
 ---
 
-<BaseLayout title="Project ASCP">
+<BaseLayout title="ASCP - AOSP Based Android ROM">
     <HeroSection />
     <FeaturesSection />
-
-    <section class="py-10 border-y border-white/5 bg-white/5 backdrop-blur-sm">
-        <div class="container mx-auto px-4 mb-8 text-center">
-            <h3 class="text-3xl md:text-4xl font-bold tracking-widest">Experience The UI</h3>
-        </div>
-        <ScreenshotGallery />
-    </section>
-
+    <StatsSection />
+    <ScreenshotGallery />
+    <FAQSection client:visible />
     <CTASection />
 </BaseLayout>

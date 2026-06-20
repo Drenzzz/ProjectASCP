@@ -66,7 +66,7 @@ export function Navbar() {
     return (
         <>
             <header className="sticky top-0 z-50 w-full bg-primary">
-                <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">
+                <div className="container-wide h-16 md:h-20 flex items-center justify-between">
                     <a
                         href="/"
                         className="flex items-center gap-2"
@@ -79,7 +79,7 @@ export function Navbar() {
                             className="h-8 w-8"
                         />
                         <span className="font-bold text-xl text-white tracking-tight">
-                            ASCP
+                            PROJECT ASCP
                         </span>
                     </a>
 

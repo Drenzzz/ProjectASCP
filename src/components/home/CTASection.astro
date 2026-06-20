@@ -1,37 +1,72 @@
 ---
-import { buttonVariants } from "@/components/ui/button";
+import Blob from "@/components/common/Blob.astro";
 ---
 
-<section class="py-20">
-    <div class="container px-4 mx-auto text-center space-y-8">
-        <div class="inline-flex items-center justify-center p-3 rounded-2xl bg-secondary/30 mb-4">
+<section class="py-24">
+    <div class="container-wide">
+        <div class="relative bg-primary rounded-3xl px-8 py-20 md:py-24 overflow-hidden">
+
+            <!-- Blob accents -->
+            <Blob class="-top-12 -right-12" size="w-64 h-64" opacity={0.12} duration={40} />
+            <Blob class="-bottom-16 -left-16" size="w-48 h-48" opacity={0.08} duration={55} reverse={true} />
+
+            <!-- Squiggle doodle top-left -->
             <svg
-                class="h-8 w-8 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                class="absolute top-6 left-8 w-20 h-6 text-white/15"
+                viewBox="0 0 80 20"
+                preserveAspectRatio="none"
                 aria-hidden="true"
             >
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-                <path d="M2 12h20"></path>
+                <path
+                    d="M0 10 Q10 2 20 10 T40 10 T60 10 T80 10"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
             </svg>
+
+            <!-- Arrow doodle bottom-right -->
+            <svg
+                class="absolute bottom-8 right-10 w-8 h-8 text-white/20 rotate-45"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+            >
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <div class="relative z-10 text-center space-y-6" data-reveal>
+                <p class="text-xs font-semibold tracking-widest uppercase text-white/50">
+                    Get started
+                </p>
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+                    Ready to Upgrade?
+                </h2>
+                <p class="text-lg text-white/70 max-w-md mx-auto leading-relaxed">
+                    Give your device a new life with ASCP. Clean, fast, and yours.
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                    <!-- White pill button — explicit text color so it's always visible -->
+                    <a
+                        href="/devices"
+                        class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full bg-white font-bold text-base text-primary hover:bg-white/90 transition-colors"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 15V3"></path>
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <path d="m7 10 5 5 5-5"></path>
+                        </svg>
+                        Download ASCP
+                    </a>
+                    <a
+                        href="/about"
+                        class="inline-flex items-center justify-center h-12 px-8 text-base font-semibold rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors"
+                    >
+                        Learn More
+                    </a>
+                </div>
+            </div>
         </div>
-        <h2 class="text-3xl md:text-5xl font-bold">Ready to Upgrade?</h2>
-        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join the community and give your device a new life with ASCP.
-        </p>
-        <a
-            href="/devices"
-            class={buttonVariants({
-                size: "lg",
-                className: "h-12 px-12 text-base font-bold rounded-full",
-            })}
-        >
-            Start Download
-        </a>
     </div>
 </section>

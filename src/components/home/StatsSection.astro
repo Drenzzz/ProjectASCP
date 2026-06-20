@@ -7,57 +7,50 @@ const devices = await getAllDevices();
 
 const stats = [
     {
-        label: "Total Downloads",
-        value: new Intl.NumberFormat("en-US").format(downloads),
+        label: "Downloads",
+        // numeric target for count-up, suffix separate
+        target: downloads,
         suffix: "+",
-        iconPath: `<path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path>`,
+        decimals: 0,
     },
     {
         label: "Supported Devices",
-        value: String(devices.length || 15),
+        target: devices.length || 22,
         suffix: "",
-        iconPath: `<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path>`,
+        decimals: 0,
     },
     {
-        label: "Monthly Active Users",
-        value: "2.5K",
-        suffix: "+",
-        iconPath: `<path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>`,
+        label: "Community Members",
+        target: 2.5,
+        suffix: "K+",
+        decimals: 1,
     },
 ];
 ---
 
-<section class="py-24 border-y border-white/5 bg-background/50 relative overflow-hidden">
-    <div class="absolute inset-0 bg-primary/5 blur-[100px] pointer-events-none"></div>
-    <div class="container px-4 mx-auto relative z-10">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {
-                stats.map((stat) => (
-                    <div class="flex flex-col items-center text-center space-y-4 group">
-                        <div class="p-4 rounded-2xl bg-secondary/30 ring-1 ring-white/10 transition-transform group-hover:scale-110 duration-300">
-                            <svg
-                                class="h-6 w-6 text-primary"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                aria-hidden="true"
-                            >
-                                <Fragment set:html={stat.iconPath} />
-                            </svg>
-                        </div>
-                        <div class="space-y-1">
-                            <h3 class="text-3xl md:text-4xl font-bold tracking-tight">
-                                {stat.value}
-                                {stat.suffix}
-                            </h3>
-                            <p class="text-sm font-medium text-muted-foreground uppercase tracking-wider">{stat.label}</p>
-                        </div>
+<section class="py-16 border-b border-gray-200" data-reveal>
+    <div class="container-wide">
+        <div class="bg-primary rounded-3xl px-8 py-14">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-white/20">
+                {stats.map((stat) => (
+                    <div class="text-center space-y-2 pt-8 md:pt-0 first:pt-0">
+                        <h3
+                            class="text-5xl md:text-6xl font-extrabold tracking-tight text-white tabular-nums"
+                            data-count-target={stat.target}
+                            data-count-suffix={stat.suffix}
+                            data-count-decimals={stat.decimals}
+                        >
+                            {stat.decimals > 0
+                                ? stat.target.toFixed(stat.decimals)
+                                : new Intl.NumberFormat("en-US").format(Math.floor(stat.target))
+                            }{stat.suffix}
+                        </h3>
+                        <p class="text-xs font-semibold tracking-widest uppercase text-white/60">
+                            {stat.label}
+                        </p>
                     </div>
-                ))
-            }
+                ))}
+            </div>
         </div>
     </div>
 </section>

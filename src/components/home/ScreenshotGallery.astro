@@ -1,33 +1,121 @@
 ---
-const screenshots = Array.from({ length: 37 }, (_, i) => ({
+import PhoneFrame from "@/components/common/PhoneFrame.astro";
+import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
+
+const screenshots = Array.from({ length: 14 }, (_, i) => ({
     src: `/screenshots/ss${i + 1}.jpg`,
-    id: i + 1,
+    alt: `ASCP interface screenshot ${i + 1}`,
 }));
 ---
 
-<div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {
-            screenshots.map((screenshot) => (
-                <a
-                    href={screenshot.src}
-                    target="_blank"
-                    rel="noreferrer"
-                    class="group block overflow-hidden rounded-xl border border-white/5 bg-white/[0.02] transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_30px_-10px] hover:shadow-primary/20"
-                    aria-label={`Open screenshot ${screenshot.id} in new tab`}
-                >
-                    <div class="aspect-[9/16] overflow-hidden bg-black/40">
-                        <img
-                            src={screenshot.src}
-                            alt={`ASCP screenshot ${screenshot.id}`}
-                            width="360"
-                            height="640"
-                            loading="lazy"
-                            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                    </div>
-                </a>
-            ))
-        }
+<section class="py-24 overflow-hidden">
+    <div class="container-wide space-y-12">
+
+        <!-- Header -->
+        <div class="text-center space-y-3" data-reveal>
+            <p class="text-xs font-semibold tracking-widest uppercase text-gray-400">In action</p>
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                See <SquiggleUnderline>ASCP</SquiggleUnderline> in Action
+            </h2>
+            <p class="text-base md:text-lg text-gray-500">
+                A glimpse of what your device looks like after flashing.
+            </p>
+        </div>
+
+        <!-- Carousel -->
+        <div class="relative" data-reveal data-reveal-delay="0.1">
+            <div class="overflow-hidden" id="carousel-viewport">
+                <div class="flex gap-6 items-center" id="carousel-track">
+                    {screenshots.map((ss) => (
+                        <div class="flex-none w-[62%] sm:w-[42%] md:w-[28%] lg:w-[22%]">
+                            <PhoneFrame>
+                                <img
+                                    src={ss.src}
+                                    alt={ss.alt}
+                                    class="absolute inset-0 w-full h-full object-contain bg-black"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </PhoneFrame>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <!-- Nav buttons -->
+            <button
+                type="button"
+                id="carousel-prev"
+                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 bg-white rounded-full w-11 h-11 flex items-center justify-center border border-gray-200 shadow-sm hover:bg-gray-50 hover:border-primary/30 transition-all z-10"
+                aria-label="Previous screenshot"
+            >
+                <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m15 18-6-6 6-6"></path>
+                </svg>
+            </button>
+
+            <button
+                type="button"
+                id="carousel-next"
+                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 bg-white rounded-full w-11 h-11 flex items-center justify-center border border-gray-200 shadow-sm hover:bg-gray-50 hover:border-primary/30 transition-all z-10"
+                aria-label="Next screenshot"
+            >
+                <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Dots -->
+        <div class="flex justify-center gap-2" id="carousel-dots"></div>
+
     </div>
-</div>
+</section>
+
+<script>
+    import EmblaCarousel from "embla-carousel";
+
+    const viewport = document.getElementById("carousel-viewport");
+    const prevBtn = document.getElementById("carousel-prev");
+    const nextBtn = document.getElementById("carousel-next");
+    const dotsContainer = document.getElementById("carousel-dots");
+
+    if (viewport) {
+        const embla = EmblaCarousel(viewport, {
+            loop: true,
+            align: "start",
+            slidesToScroll: 1,
+        });
+
+        const totalSlides = embla.scrollSnapList().length;
+        let selectedIndex = 0;
+
+        function renderDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = "";
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement("button");
+                dot.type = "button";
+                dot.className = `rounded-full transition-all duration-200 ${
+                    i === selectedIndex
+                        ? "w-5 h-2 bg-primary"
+                        : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
+                }`;
+                dot.setAttribute("aria-label", `Go to screenshot ${i + 1}`);
+                dot.addEventListener("click", () => embla.scrollTo(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function onSelect() {
+            selectedIndex = embla.selectedScrollSnap();
+            renderDots();
+        }
+
+        prevBtn?.addEventListener("click", () => embla.scrollPrev());
+        nextBtn?.addEventListener("click", () => embla.scrollNext());
+        embla.on("select", onSelect);
+
+        renderDots();
+    }
+</script>

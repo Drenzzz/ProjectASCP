@@ -13,7 +13,7 @@ import {
 let devicesCache: Map<string, Device> | null = null;
 
 export async function getAllDevices(): Promise<Device[]> {
-    const data = await fetchJSON("/devices.json", rawDevicesResponseSchema);
+    const data = await fetchJSON("/device/devices.json", rawDevicesResponseSchema);
     if (!data) return [];
     return data.devices.map(rawToDevice);
 }
@@ -38,17 +38,20 @@ export async function getDeviceByCodename(codename: string): Promise<DeviceWithB
     const device = map.get(codename.toLowerCase());
     if (!device) return null;
 
-    const buildData = await fetchJSON(
-        `/updater/${codename}.json`,
-        rawUpdaterResponseSchema,
-    );
-    const firstBuild = buildData?.response?.[0];
-    const latestBuild = firstBuild ? rawToBuildEntry(firstBuild) : null;
+    const [fullBuildData, incrementalBuildData] = await Promise.all([
+        fetchJSON(`/device/${codename}/updater/full.json`, rawUpdaterResponseSchema),
+        fetchJSON(`/device/${codename}/updater/incremental.json`, rawUpdaterResponseSchema),
+    ]);
+
+    const latestBuild = fullBuildData?.response?.[0] ? rawToBuildEntry(fullBuildData.response[0]) : null;
+    const incrementalBuild = incrementalBuildData?.response?.[0] ? rawToBuildEntry(incrementalBuildData.response[0]) : null;
 
     return {
         ...device,
         latestBuild,
-        changelogUrl: `${API_BASE}/full_changelogs/${codename}.md`,
-        instructionUrl: `${API_BASE}/instructions/${codename}.md`,
+        incrementalBuild,
+        downloadCount: 0,
+        changelogUrl: `${API_BASE}/device/${codename}/changelogs/his_changelog.md`,
+        instructionUrl: `${API_BASE}/device/${codename}/instruction.md`,
     };
 }

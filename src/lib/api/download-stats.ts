@@ -16,8 +16,3 @@ export async function getDeviceDownloadCount(codename: string): Promise<number> 
     const stats = await getDownloadStats();
     return stats[codename] ?? 0;
 }
-
-export async function getTotalDownloads(): Promise<number> {
-    const stats = await getDownloadStats();
-    return Object.values(stats).reduce((sum, count) => sum + count, 0);
-}

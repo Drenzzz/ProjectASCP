@@ -38,7 +38,6 @@ export interface Device {
 
 export interface DeviceWithBuild extends Device {
     latestBuild: import("./updater").BuildEntry | null;
-    incrementalBuild: import("./updater").BuildEntry | null;
     downloadCount: number;
     changelogUrl: string;
     instructionUrl: string;

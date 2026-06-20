@@ -13,12 +13,3 @@ export async function getLatestBuild(codename: string): Promise<BuildEntry | nul
     const first = data?.response?.[0];
     return first ? rawToBuildEntry(first) : null;
 }
-
-export async function getIncrementalBuild(codename: string): Promise<BuildEntry | null> {
-    const data = await fetchJSON(
-        `/device/${codename}/updater/incremental.json`,
-        rawUpdaterResponseSchema,
-    );
-    const first = data?.response?.[0];
-    return first ? rawToBuildEntry(first) : null;
-}

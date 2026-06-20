@@ -1,8 +1,6 @@
 import { z } from "zod";
 import { formatBytes, formatDate } from "@/lib/utils";
 
-export type BuildType = "full" | "incremental";
-
 export const rawBuildEntrySchema = z.object({
     datetime: z.string(),
     filename: z.string(),

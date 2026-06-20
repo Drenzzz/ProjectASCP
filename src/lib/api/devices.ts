@@ -38,19 +38,13 @@ export async function getDeviceByCodename(codename: string): Promise<DeviceWithB
     const device = map.get(codename.toLowerCase());
     if (!device) return null;
 
-    const [fullBuildData, incrementalBuildData] = await Promise.all([
-        fetchJSON(`/device/${codename}/updater/full.json`, rawUpdaterResponseSchema),
-        fetchJSON(`/device/${codename}/updater/incremental.json`, rawUpdaterResponseSchema),
-    ]);
+    const fullBuildData = await fetchJSON(`/device/${codename}/updater/full.json`, rawUpdaterResponseSchema);
 
     const latestBuild = fullBuildData?.response?.[0] ? rawToBuildEntry(fullBuildData.response[0]) : null;
-    const incrementalBuild = incrementalBuildData?.response?.[0] ? rawToBuildEntry(incrementalBuildData.response[0]) : null;
 
     return {
         ...device,
         latestBuild,
-        incrementalBuild,
-        downloadCount: 0,
         changelogUrl: `${API_BASE}/device/${codename}/changelogs/his_changelog.md`,
         instructionUrl: `${API_BASE}/device/${codename}/instruction.md`,
     };

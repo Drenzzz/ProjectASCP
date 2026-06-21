@@ -3,7 +3,7 @@ import { marked } from "marked";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { DeviceTabs } from "@/components/device-detail/DeviceTabs";
 import { CopyButton } from "@/components/common/CopyButton";
-import { getDeviceByCodename } from "@/lib/api/devices";
+import { getDeviceByCodename, getAllDevices } from "@/lib/api/devices";
 import { getDeviceInstructions } from "@/lib/api/instructions";
 import { getDeviceChangelog } from "@/lib/api/changelog";
 import { getDeviceDownloadCount } from "@/lib/api/download-stats";
@@ -11,12 +11,12 @@ import { codenameSchema } from "@/lib/validators";
 import { API_BASE } from "@/lib/api/client";
 import JsonLd from "@/components/common/JsonLd.astro";
 
-export const prerender = false;
-
-Astro.response.headers.set(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=86400",
-);
+export async function getStaticPaths() {
+    const devices = await getAllDevices();
+    return devices.map((d) => ({
+        params: { codename: d.codename },
+    }));
+}
 
 const { codename } = Astro.params;
 const validation = codenameSchema.safeParse(codename);

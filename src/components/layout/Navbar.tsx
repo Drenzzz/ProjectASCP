@@ -79,7 +79,7 @@ export function Navbar() {
                             className="h-8 w-8"
                         />
                         <span className="font-bold text-xl text-white tracking-tight">
-                            PROJECT ASCP
+                            ASCP
                         </span>
                     </a>
 

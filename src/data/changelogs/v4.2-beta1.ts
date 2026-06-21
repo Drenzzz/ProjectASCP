@@ -1,16 +1,16 @@
 import type { Changelog } from "./types";
 
 export const v4_2_beta1: Changelog = {
-    version: "v4.2 - OPEN BETA",
+    version: "v4.2 - Open Beta",
     date: "2025-11-19",
     type: "Beta",
     title: "Android 16.0 QPR-1 Initial Release",
-    description: "Introducing ASCP v4.2 - OPEN BETA based on Android Open Source Project (AOSP), Android 16.0 | QPR-1.",
+    description: "Introducing ASCP v4.2 - Open Beta based on Android Open Source Project (AOSP), Android 16.0 | QPR-1.",
     content: [
         {
             name: "System",
             items: [
-                "Initial ASCP v4.2-OPEN BETA based on AOSP Android 16.0 Qpr1",
+                "Initial ASCP v4.2-Open Beta based on AOSP Android 16.0 Qpr1",
                 "Integrated the November security patch",
                 "Improved the overall stability on top of aosp base",
             ],

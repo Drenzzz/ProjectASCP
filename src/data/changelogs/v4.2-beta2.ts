@@ -1,11 +1,11 @@
 import type { Changelog } from "./types";
 
 export const v4_2_beta2: Changelog = {
-    version: "v4.2 - OPEN BETA 2",
+    version: "v4.2 - Open Beta 2",
     date: "2025-11-23",
     type: "Beta",
     title: "Bug Fixes & Feature Additions",
-    description: "Introducing ASCP v4.2 - OPEN BETA 2 with some bug fixes and few good features.",
+    description: "Introducing ASCP v4.2 - Open Beta 2 with some bug fixes and few good features.",
     content: [
         {
             name: "System",

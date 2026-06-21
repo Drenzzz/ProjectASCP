@@ -1,0 +1,46 @@
+---
+export interface Props {
+    title: string;
+    description?: string;
+    canonical?: string;
+    image?: string;
+    type?: string;
+}
+
+const {
+    title,
+    description = "Clean. Minimalist. Performance. The next generation Android Custom ROM experience focused on stability and essential enhancements.",
+    canonical,
+    image = "/og.png",
+    type = "website",
+} = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? "http://localhost:4321";
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).href;
+const imageUrl = new URL(image, siteUrl).href;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content="Project ASCP" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#1a1a2e" />

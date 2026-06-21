@@ -29,43 +29,37 @@ const features = [
 ];
 ---
 
-<section class="py-24 bg-gray-50 border-y border-gray-200">
-    <div class="container-wide space-y-14">
+<section class="py-24 bg-white border-0">
+    <div class="container-wide space-y-14 max-w-7xl mx-auto">
 
         <!-- Section header -->
         <div class="text-center space-y-3 max-w-2xl mx-auto" data-reveal>
-            <p class="text-xs font-semibold tracking-widest uppercase text-gray-400">Why ASCP</p>
-            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-extrabold bg-primary text-white tracking-wider uppercase select-none border-0 mb-2">
+                Why ASCP
+            </span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-none">
                 Why Choose <SquiggleUnderline>ASCP?</SquiggleUnderline>
             </h2>
-            <p class="text-base md:text-lg text-gray-500 leading-relaxed">
+            <p class="text-base text-gray-500 font-bold pt-1">
                 Built for users who care about performance, privacy, and a clean experience.
             </p>
         </div>
 
         <!-- 2x2 uniform grid — items-stretch keeps all cards same height per row -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch" data-reveal-stagger="0.1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch" data-reveal-stagger="0.1">
             {features.map((feature) => (
                 <div
-                    class:list={[
-                        "flex flex-col rounded-2xl border p-6 transition-shadow duration-200 hover:shadow-md",
-                        feature.accent
-                            ? "bg-primary/8 border-primary/20"
-                            : "bg-white border-gray-200",
-                    ]}
+                    class="flex flex-col rounded-[32px] bg-[#f0f4f8] hover:bg-[#e4ebf3] hover:scale-[1.005] transition-all duration-300 p-8 border-0 shadow-none relative overflow-hidden"
                     data-reveal-child
                 >
-                    <!-- Icon -->
-                    <div class:list={[
-                        "mb-4 w-10 h-10 flex items-center justify-center rounded-xl shrink-0",
-                        feature.accent ? "bg-primary/15" : "bg-primary/10",
-                    ]}>
+                    <!-- Icon in M3 style circle -->
+                    <div class="mb-5 w-12 h-12 flex items-center justify-center rounded-[20px] bg-white text-primary shadow-xs border-0 shrink-0 select-none">
                         <svg
-                            class="h-5 w-5 text-primary"
+                            class="h-5.5 w-5.5"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
+                            stroke-width="2.5"
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             aria-hidden="true"
@@ -74,15 +68,12 @@ const features = [
                         </svg>
                     </div>
 
-                    <!-- Text — stacked vertically, not side-by-side -->
-                    <div class="space-y-1.5">
-                        <h3 class:list={[
-                            "text-base font-semibold tracking-tight",
-                            feature.accent ? "text-primary" : "text-gray-900",
-                        ]}>
+                    <!-- Text description -->
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-black text-gray-900 tracking-tight">
                             {feature.title}
                         </h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">
+                        <p class="text-sm font-semibold text-gray-600 leading-relaxed">
                             {feature.description}
                         </p>
                     </div>

@@ -224,8 +224,11 @@ const displayImage = device.imageUrl || bannerUrl;
                 <span class="text-md font-extrabold text-gray-500 tracking-wider block mb-1.5">
                     Latest Version
                 </span>
-                <span class="text-8xl font-black text-gray-900 mt-auto leading-none">
-                    {version ?? "1.0"}
+                <span class:list={[
+                    "font-black text-gray-900 mt-auto leading-none",
+                    version ? "text-8xl" : "text-4xl pb-2"
+                ]}>
+                    {version ?? "Unknown"}
                 </span>
             </div>
 
@@ -246,7 +249,7 @@ const displayImage = device.imageUrl || bannerUrl;
                         Filename
                     </span>
                     <span class="text-sm font-bold text-gray-700 break-all select-all block leading-relaxed">
-                        {filename ?? "ascp-build-release.zip"}
+                        {filename ?? "Unknown"}
                     </span>
                 </div>
 

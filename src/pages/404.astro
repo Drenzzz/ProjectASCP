@@ -1,54 +1,65 @@
----
+    ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { buttonVariants } from "@/components/ui/button";
+import Blob from "@/components/common/Blob.astro";
+import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
 ---
 
 <BaseLayout title="404 | ASCP" description="The page you are looking for does not exist.">
-    <div class="flex flex-col items-center justify-center min-h-[70vh] text-center space-y-6 px-4">
-        <div class="relative">
-            <h1 class="text-8xl md:text-[12rem] font-bold tracking-tighter text-primary/10 select-none">
-                404
-            </h1>
-            <div class="absolute inset-0 flex items-center justify-center">
-                <svg
-                    class="h-12 w-12 md:h-20 md:w-20 text-primary/70"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <path d="M14 2v6h6"></path>
-                    <path d="M9 13h6"></path>
-                    <path d="M9 17h6"></path>
-                </svg>
+    <div class="relative overflow-hidden w-full min-h-[85vh] flex items-center justify-center py-20">
+        <!-- Organic Blobs decoration -->
+        <Blob class="-top-20 -right-20" size="w-80 h-80" opacity={0.06} duration={50} />
+        <Blob class="-bottom-20 -left-20" size="w-72 h-72" opacity={0.05} duration={60} reverse={true} />
+
+        <div class="container-narrow relative z-10 flex justify-center">
+            <div class="bento-card max-w-lg w-full mx-4 p-8 md:p-12 rounded-[32px] bg-[#f0f4f8] hover:bg-[#e4ebf3] hover:scale-[1.005] transition-all duration-300 flex flex-col items-center text-center gap-8 border-0 shadow-none relative overflow-hidden">
+
+                <!-- Text Content -->
+                <div class="space-y-4 max-w-sm">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-primary">
+                        404 Error
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 leading-tight">
+                        Page <SquiggleUnderline>Not Found</SquiggleUnderline>
+                    </h1>
+                    <p class="text-base text-gray-600 font-medium leading-relaxed">
+                        Sorry, we couldn&apos;t find the page you&apos;re looking for. It might have been moved or deleted.
+                    </p>
+                </div>
+
+                <!-- CTA Actions -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                    <a
+                        href="/"
+                        class={buttonVariants({
+                            size: "lg",
+                            className: "w-full sm:w-auto h-12 px-6 text-base font-bold rounded-full gap-2 hover:scale-[1.03] transition-transform duration-200",
+                        })}
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="m12 19-7-7 7-7" />
+                            <path d="M19 12H5" />
+                        </svg>
+                        Back to Home
+                    </a>
+                    <a
+                        href="/devices"
+                        class={buttonVariants({
+                            variant: "outline",
+                            size: "lg",
+                            className: "w-full sm:w-auto h-12 px-6 text-base font-bold rounded-full gap-2 hover:scale-[1.03] transition-transform duration-200",
+                        })}
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect width="7" height="9" x="3" y="3" rx="1" />
+                            <rect width="7" height="5" x="14" y="3" rx="1" />
+                            <rect width="7" height="9" x="14" y="12" rx="1" />
+                            <rect width="7" height="5" x="3" y="16" rx="1" />
+                        </svg>
+                        View Devices
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <div class="space-y-2 max-w-md mx-auto relative z-10">
-            <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Page Not Found</h2>
-            <p class="text-muted-foreground">
-                Sorry, we couldn&apos;t find the page you&apos;re looking for.
-            </p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row items-center gap-3 relative z-10">
-            <a href="/" class={buttonVariants({ size: "default", className: "rounded-full font-medium" })}>
-                Back to Home
-            </a>
-            <a
-                href="/devices"
-                class={buttonVariants({
-                    variant: "outline",
-                    size: "default",
-                    className: "rounded-full font-medium",
-                })}
-            >
-                View Devices
-            </a>
         </div>
     </div>
 </BaseLayout>

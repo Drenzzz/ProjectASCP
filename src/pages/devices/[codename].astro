@@ -9,14 +9,14 @@ import { getDeviceChangelog } from "@/lib/api/changelog";
 import { getDeviceDownloadCount } from "@/lib/api/download-stats";
 import { codenameSchema } from "@/lib/validators";
 import { API_BASE } from "@/lib/api/client";
+import JsonLd from "@/components/common/JsonLd.astro";
 
-export async function getStaticPaths() {
-    const { getAllDevices } = await import("@/lib/api/devices");
-    const devices = await getAllDevices();
-    return devices.map((d) => ({
-        params: { codename: d.codename },
-    }));
-}
+export const prerender = false;
+
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
 
 const { codename } = Astro.params;
 const validation = codenameSchema.safeParse(codename);
@@ -66,17 +66,39 @@ function formatBuildDate(dateStr?: string) {
 
 const bannerUrl = `${API_BASE}/device/${device.codename}/banner/image.png`;
 const displayImage = device.imageUrl || bannerUrl;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://projectascp.org";
+
+const softwareSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: `ASCP for ${device.name}`,
+    operatingSystem: "Android",
+    applicationCategory: "MobileApplication",
+    description: `Get the latest clean Android experience for ${device.name}. Maintained by ${device.maintainer}.`,
+    url: `${siteUrl}/devices/${device.codename}`,
+    author: {
+        "@type": "Person",
+        name: device.maintainer,
+    },
+    offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+    },
+};
 ---
 
 <BaseLayout
     title={`Download ASCP for ${device.name} (${device.codename})`}
     description={`Get the latest clean Android experience for ${device.name}. Maintained by ${device.maintainer}.`}
 >
+    <JsonLd schema={softwareSchema} />
     <div class="container px-4 mx-auto py-12 max-w-7xl">
         <!-- M3E Bento Grid (4 Columns Layout on large screens) -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             <!-- Card 1: Device Header Card (Col span 4) -->
-            <div class="bento-card lg:col-span-4 md:col-span-2 col-span-1 p-8 md:p-10 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between gap-8 hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-4 md:col-span-2 col-span-1 p-8 md:p-10 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between gap-8 hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal>
                 <div class="space-y-4">
                     <h1 class="text-5xl sm:text-6xl font-black text-gray-900 tracking-tight leading-tight">
                         {device.name}
@@ -126,7 +148,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 2: Device Image Card (Col span 2, Row span 2) -->
-            <div class="bento-card lg:col-span-2 lg:row-span-2 md:col-span-2 col-span-1 p-8 rounded-[32px] bg-[#f0f4f8] flex items-center justify-center min-h-[320px] lg:min-h-[440px] border-0 shadow-none relative overflow-hidden hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-2 lg:row-span-2 md:col-span-2 col-span-1 p-8 rounded-[32px] bg-[#f0f4f8] flex items-center justify-center min-h-[320px] lg:min-h-[440px] border-0 shadow-none relative overflow-hidden hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal data-reveal-delay="0.05">
                 {displayImage ? (
                     <img
                         src={displayImage}
@@ -155,7 +177,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 3: Download & Stats Card (Col span 2) -->
-            <div class="bento-card lg:col-span-2 md:col-span-2 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between gap-6 hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-2 md:col-span-2 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between gap-6 hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal data-reveal-delay="0.1">
                 <div>
                     <span class="text-sm font-extrabold text-gray-500 tracking-wider block mb-1.5">
                         Total Downloads
@@ -190,7 +212,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 4: Status Card (Col span 1) -->
-            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal data-reveal-delay="0.15">
                 <span class="text-3xl font-extrabold text-gray-500 tracking-wider block mb-1.5">
                     Status
                 </span>
@@ -210,7 +232,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 5: File Size Card (Col span 1) -->
-            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal data-reveal-delay="0.2">
                 <span class="text-3xl font-extrabold text-gray-500 tracking-wider block mb-1.5">
                     File Size
                 </span>
@@ -220,7 +242,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 6: Latest Version Card (Col span 1) -->
-            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal data-reveal-delay="0.25">
                 <span class="text-md font-extrabold text-gray-500 tracking-wider block mb-1.5">
                     Latest Version
                 </span>
@@ -233,7 +255,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 7: Build Date Card (Col span 1) -->
-            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-1 md:col-span-1 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal data-reveal-delay="0.3">
                 <span class="text-md font-extrabold text-gray-500 tracking-wider block mb-1.5">
                     Build Date
                 </span>
@@ -243,7 +265,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 8: Filename & Checksum Card (Col span 2) -->
-            <div class="bento-card lg:col-span-2 md:col-span-2 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between gap-4 hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300">
+            <div class="bento-card lg:col-span-2 md:col-span-2 col-span-1 p-6 md:p-8 rounded-[32px] bg-[#f0f4f8] border-0 shadow-none flex flex-col justify-between gap-4 hover:scale-[1.01] hover:bg-[#e4ebf3] transition-all duration-300" data-reveal data-reveal-delay="0.35">
                 <div>
                     <span class="text-sm font-extrabold text-gray-500 tracking-wider block mb-1.5">
                         Filename
@@ -265,7 +287,7 @@ const displayImage = device.imageUrl || bannerUrl;
             </div>
 
             <!-- Card 9: Documentation / Tabs Card (Col span 4) -->
-            <div class="bento-card lg:col-span-4 md:col-span-2 col-span-1 pt-6">
+            <div class="bento-card lg:col-span-4 md:col-span-2 col-span-1 pt-6" data-reveal data-reveal-delay="0.4">
                 <DeviceTabs
                     client:load
                     instructionsHtml={instructionsHtml}
@@ -275,40 +297,4 @@ const displayImage = device.imageUrl || bannerUrl;
             
         </div>
     </div>
-
-    <!-- Lenis & GSAP Animation Script -->
-    <script>
-        import Lenis from "lenis";
-        import { gsap } from "gsap";
-
-        // Initialize Lenis smooth scroll
-        const lenis = new Lenis();
-        function raf(time: number) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
-        // Stagger fade-in for Bento Grid cards using fromTo for absolute stability
-        gsap.fromTo(
-            ".bento-card",
-            { opacity: 0, y: 16 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.05,
-                ease: "power2.out",
-                clearProps: "transform",
-            }
-        );
-    </script>
-
-    <!-- CSS stylesheet block to prevent FOUC (Flash of Unstyled Content) -->
-    <style>
-        .bento-card {
-            opacity: 0;
-            transform: translateY(16px);
-        }
-    </style>
 </BaseLayout>

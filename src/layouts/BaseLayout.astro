@@ -33,6 +33,9 @@ const {
         <meta name="twitter:image" content="/og.png" />
     </head>
     <body class="bg-background text-foreground min-h-screen flex flex-col">
+        <!-- Scroll Progress Bar -->
+        <div id="scroll-progress" class="fixed top-0 left-0 right-0 h-1 bg-primary origin-left scale-x-0 z-50 pointer-events-none"></div>
+
         <Navbar client:load />
         <main class="flex-1 flex flex-col">
             <slot />
@@ -44,6 +47,26 @@ const {
         // Init on first load
         initLenis();
         registerRevealObserver();
+
+        // Animate scroll progress bar
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduced) {
+            import("gsap").then(async ({ gsap }) => {
+                const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+                gsap.registerPlugin(ScrollTrigger);
+                gsap.to("#scroll-progress", {
+                    scaleX: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: true,
+                    },
+                });
+            });
+        }
+
         // Re-run reveals on Astro view transitions if added later
         document.addEventListener("astro:page-load", () => {
             registerRevealObserver();

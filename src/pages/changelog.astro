@@ -2,6 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { ChangelogAccordion } from "@/components/changelog/ChangelogAccordion";
 import { changelogData } from "@/data/changelogs";
+import Blob from "@/components/common/Blob.astro";
+import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
 ---
 
 
@@ -9,16 +11,21 @@ import { changelogData } from "@/data/changelogs";
     title="Changelog | ASCP"
     description="Stay updated with the latest improvements, fixes, and features of Project ASCP."
 >
-    <div class="container mx-auto px-4 pt-28 pb-16 max-w-7xl space-y-12">
-        {/* Row 1: Header Bento Card */}
-        <div class="bento-card w-full p-10 md:p-12 rounded-[32px] bg-[#f0f4f8] hover:bg-[#e4ebf3] hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row items-center justify-between gap-8 border-0 shadow-none relative overflow-hidden">
-            <div class="space-y-4 max-w-2xl">
-                <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-extrabold bg-primary text-white tracking-wider select-none border-0">
-                    System Changelog
-                </span>
-                <h1 class="text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-none">
-                    Evolution of <span class="text-primary font-black">ASCP</span>
-                </h1>
+    <div class="relative overflow-hidden w-full">
+        <!-- Organic Blobs decoration -->
+        <Blob class="-top-20 -right-20" size="w-80 h-80" opacity={0.06} duration={50} />
+        <Blob class="bottom-40 -left-20" size="w-72 h-72" opacity={0.05} duration={60} reverse={true} />
+
+        <div class="container mx-auto px-4 pt-28 pb-16 max-w-7xl space-y-12 relative z-10">
+            {/* Row 1: Header Bento Card */}
+            <div class="bento-card w-full p-10 md:p-12 rounded-[32px] bg-[#f0f4f8] hover:bg-[#e4ebf3] hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row items-center justify-between gap-8 border-0 shadow-none relative overflow-hidden">
+                <div class="space-y-4 max-w-2xl">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-extrabold bg-primary text-white tracking-wider select-none border-0">
+                        System Changelog
+                    </span>
+                    <h1 class="text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-none">
+                        Evolution of <SquiggleUnderline><span class="text-primary font-black">ASCP</span></SquiggleUnderline>
+                    </h1>
                 <p class="text-lg text-gray-600 leading-relaxed font-medium">
                     Track every commit, every fix, and every improvement. See how we're pushing the boundaries of performance and stability.
                 </p>
@@ -61,4 +68,5 @@ import { changelogData } from "@/data/changelogs";
             transform: translateY(16px);
         }
     </style>
+    </div>
 </BaseLayout>

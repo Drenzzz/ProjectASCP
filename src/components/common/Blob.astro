@@ -21,16 +21,16 @@ const {
 } = Astro.props;
 
 const fill = `oklch(0.48 0.13 200 / ${opacity})`;
-const animDir = reverse ? "spin-reverse" : "spin-slow";
 ---
 
 <div
   class:list={["absolute pointer-events-none", size, className]}
   aria-hidden="true"
+  style={`--blob-duration: ${duration}s`}
 >
   <svg
     viewBox="0 0 200 200"
-    class:list={["w-full h-full", animDir === "spin-slow" ? "animate-[spin_45s_linear_infinite]" : "animate-[spin_45s_linear_infinite_reverse]"]}
+    class:list={["w-full h-full", reverse ? "blob-drift-reverse" : "blob-drift"]}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -40,3 +40,42 @@ const animDir = reverse ? "spin-reverse" : "spin-slow";
     />
   </svg>
 </div>
+
+<style>
+  @keyframes drift-spin {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      transform: translate(25px, -20px) rotate(120deg) scale(1.08);
+    }
+    66% {
+      transform: translate(-20px, 25px) rotate(240deg) scale(0.92);
+    }
+    100% {
+      transform: translate(0, 0) rotate(360deg) scale(1);
+    }
+  }
+
+  @keyframes drift-spin-reverse {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      transform: translate(-25px, 20px) rotate(-120deg) scale(0.92);
+    }
+    66% {
+      transform: translate(20px, -25px) rotate(-240deg) scale(1.08);
+    }
+    100% {
+      transform: translate(0, 0) rotate(-360deg) scale(1);
+    }
+  }
+
+  .blob-drift {
+    animation: drift-spin var(--blob-duration, 45s) ease-in-out infinite;
+  }
+  .blob-drift-reverse {
+    animation: drift-spin-reverse var(--blob-duration, 45s) ease-in-out infinite;
+  }
+</style>

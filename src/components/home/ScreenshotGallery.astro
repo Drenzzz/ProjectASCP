@@ -1,11 +1,23 @@
 ---
+import { Image } from "astro:assets";
 import PhoneFrame from "@/components/common/PhoneFrame.astro";
 import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
 
-const screenshots = Array.from({ length: 14 }, (_, i) => ({
-    src: `/screenshots/ss${i + 1}.jpg`,
-    alt: `ASCP interface screenshot ${i + 1}`,
-}));
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/screenshots/*.jpg",
+    { eager: true },
+);
+
+const screenshots = Object.entries(imageModules)
+    .sort(([a], [b]) => {
+        const numA = parseInt(a.match(/ss(\d+)\.jpg/)?.[1] ?? "0");
+        const numB = parseInt(b.match(/ss(\d+)\.jpg/)?.[1] ?? "0");
+        return numA - numB;
+    })
+    .map(([path, mod], index) => ({
+        src: mod.default,
+        alt: `ASCP interface screenshot ${index + 1}`,
+    }));
 ---
 
 <section class="py-24 overflow-hidden">
@@ -29,9 +41,13 @@ const screenshots = Array.from({ length: 14 }, (_, i) => ({
                     {screenshots.map((ss) => (
                         <div class="flex-none w-[62%] sm:w-[42%] md:w-[28%] lg:w-[22%]">
                             <PhoneFrame>
-                                <img
+                                <Image
                                     src={ss.src}
                                     alt={ss.alt}
+                                    width={576}
+                                    height={1280}
+                                    format="webp"
+                                    densities={[1, 2]}
                                     class="absolute inset-0 w-full h-full object-contain bg-black"
                                     loading="lazy"
                                     decoding="async"

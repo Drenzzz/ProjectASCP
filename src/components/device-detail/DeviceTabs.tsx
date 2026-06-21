@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { FileText, HardDrive, List } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
+import { gsap } from "gsap";
 
 interface DeviceTabsProps {
     instructionsHtml: string;
@@ -9,41 +11,70 @@ interface DeviceTabsProps {
 }
 
 export function DeviceTabs({ instructionsHtml, changelogHtml }: DeviceTabsProps) {
+    const [activeTab, setActiveTab] = useState("instructions");
+    const contentRef = useRef<HTMLDivElement>(null);
+
     const tabs = [
         { value: "instructions", label: "Installation Guide", icon: FileText, content: instructionsHtml },
         { value: "changelog", label: "Changelog", icon: HardDrive, content: changelogHtml },
     ];
 
+    const currentTab = tabs.find((t) => t.value === activeTab);
+
+    useEffect(() => {
+        if (contentRef.current) {
+            gsap.fromTo(
+                contentRef.current,
+                { opacity: 0, y: 12 },
+                { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
+            );
+        }
+    }, [activeTab]);
+
     return (
-        <Tabs defaultValue="instructions" className="w-full space-y-6">
-            <div className="flex p-1 bg-secondary/30 backdrop-blur-md rounded-2xl border border-white/5 w-fit mx-auto lg:mx-0">
-                <TabsList>
-                    {tabs.map((tab) => (
-                        <TabsTrigger key={tab.value} value={tab.value}>
-                            <tab.icon className="h-4 w-4" />
-                            <span>{tab.label}</span>
-                        </TabsTrigger>
-                    ))}
-                </TabsList>
+        <div className="w-full space-y-6">
+            {/* Tab Switcher Bar */}
+            <div className="flex p-1.5 bg-gray-100 rounded-full w-full border-0 select-none">
+                <div className="grid grid-cols-2 gap-1.5 w-full">
+                    {tabs.map((tab) => {
+                        const Icon = tab.icon;
+                        const isActive = activeTab === tab.value;
+                        return (
+                            <button
+                                key={tab.value}
+                                onClick={() => setActiveTab(tab.value)}
+                                className={cn(
+                                    "flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-extrabold transition-all border-0 shadow-none outline-none cursor-pointer w-full select-none",
+                                    isActive
+                                        ? "bg-primary text-white shadow-xs"
+                                        : "text-gray-500 hover:text-gray-900"
+                                )}
+                            >
+                                <Icon className="h-4.5 w-4.5 shrink-0" />
+                                <span>{tab.label}</span>
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
 
-            {tabs.map((tab) => (
-                <TabsContent key={tab.value} value={tab.value}>
-                    {tab.content ? (
-                        <div className="relative min-h-[200px] overflow-hidden rounded-3xl bg-secondary/10 border border-white/5 backdrop-blur-sm p-6 md:p-8">
-                            <div
-                                className="prose max-w-none"
-                                dangerouslySetInnerHTML={{ __html: tab.content }}
-                            />
-                        </div>
-                    ) : (
-                        <div className="relative min-h-[200px] overflow-hidden rounded-3xl bg-secondary/10 border border-white/5 backdrop-blur-sm flex flex-col items-center justify-center py-12 text-muted-foreground">
-                            <List className="h-10 w-10 mb-4 opacity-20" />
-                            <p>No content available for this section.</p>
-                        </div>
-                    )}
-                </TabsContent>
-            ))}
-        </Tabs>
+            {/* Tab Content Panel */}
+            <div 
+                ref={contentRef}
+                className="relative min-h-[200px] overflow-hidden rounded-[32px] bg-[#f0f4f8] p-6 md:p-8 border-0 shadow-none"
+            >
+                {currentTab?.content ? (
+                    <div
+                        className="prose max-w-none text-gray-700 prose-headings:text-gray-900 prose-headings:font-bold prose-code:bg-white/80 prose-code:text-primary prose-a:text-primary"
+                        dangerouslySetInnerHTML={{ __html: currentTab.content }}
+                    />
+                ) : (
+                    <div className="relative min-h-[200px] flex flex-col items-center justify-center py-12 text-gray-500">
+                        <List className="h-10 w-10 mb-4 opacity-20 text-gray-400" />
+                        <p className="font-medium text-sm">No content available for this section.</p>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }

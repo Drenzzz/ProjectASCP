@@ -23,21 +23,30 @@ const philosophyItems = [
     title="About | ASCP"
     description="Learn more about the ASCP Project and the team behind it."
 >
-    <div class="container mx-auto px-4 pt-28 pb-12 space-y-16">
-        <div class="max-w-3xl mx-auto text-center space-y-6">
-            <h1 class="text-4xl md:text-5xl font-bold tracking-tight">
-                About <span class="text-primary">ASCP</span>
-            </h1>
-            <p class="text-xl text-muted-foreground leading-relaxed">
-                The Project ASCP aims to provide a clean, performant, and stable Android
-                experience close to AOSP but with essential enhancements that power
-                users actually need.
-            </p>
+    <div class="container mx-auto px-4 pt-28 pb-16 max-w-7xl space-y-12">
+        
+        {/* Row 1: Header Card */}
+        <div class="bento-card w-full p-10 md:p-12 rounded-[32px] bg-[#f0f4f8] hover:bg-[#e4ebf3] hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row items-center justify-between gap-8 border-0 shadow-none relative overflow-hidden">
+            <div class="space-y-4 max-w-2xl">
+                <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-extrabold bg-primary text-white tracking-wider select-none border-0">
+                    Project Overview
+                </span>
+                <h1 class="text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-none">
+                    About <span class="text-primary font-black">ASCP</span>
+                </h1>
+                <p class="text-lg text-gray-600 leading-relaxed font-medium">
+                    The Project ASCP aims to provide a clean, performant, and stable Android
+                    experience close to AOSP but with essential enhancements that power
+                    users actually need.
+                </p>
+            </div>
+            <div class="shrink-0 select-none bg-transparent">
+                <img src="/logo/ASCP.png" alt="ASCP Logo" class="w-48 h-48 md:w-44 md:h-44 rounded-[28px] object-cover animate-pulse" />
+            </div>
         </div>
 
-        <div class="h-px w-full max-w-md bg-gradient-to-r from-transparent via-white/10 to-transparent mx-auto"></div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {/* Row 2: Philosophy Cards (2 Column Grid) */}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-stretch">
             {
                 philosophyItems.map((item) => (
                     <PhilosophyCard
@@ -49,15 +58,43 @@ const philosophyItems = [
             }
         </div>
 
-        <div class="h-px w-full max-w-md bg-gradient-to-r from-transparent via-white/10 to-transparent mx-auto"></div>
+        {/* Row 3: Team Header Section */}
+        <div class="text-center space-y-3 pt-6">
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-extrabold bg-primary text-white tracking-wider uppercase select-none border-0">
+                Our Contributors
+            </span>
+            <h2 class="text-4xl font-black text-gray-900 tracking-tight">Meet the Team</h2>
+            <p class="text-base text-gray-500 font-bold">The minds behind the project</p>
+        </div>
 
-        <div class="space-y-8">
-            <div class="text-center space-y-2">
-                <h2 class="text-3xl font-bold">Meet the Team</h2>
-                <p class="text-muted-foreground">The minds behind the project</p>
-            </div>
-
+        {/* Row 4: Team Grid */}
+        <div class="w-full">
             <TeamSection />
         </div>
     </div>
+
+    <script>
+        import { gsap } from "gsap";
+
+        gsap.fromTo(
+            ".bento-card",
+            { opacity: 0, y: 16 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.05,
+                ease: "power2.out",
+                clearProps: "transform",
+            }
+        );
+    </script>
+
+    <!-- CSS stylesheet block to prevent FOUC (Flash of Unstyled Content) -->
+    <style>
+        .bento-card {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+    </style>
 </BaseLayout>

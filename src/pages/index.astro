@@ -6,9 +6,76 @@ import ScreenshotGallery from "@/components/home/ScreenshotGallery.astro";
 import StatsSection from "@/components/home/StatsSection.astro";
 import { FAQSection } from "@/components/home/FAQSection";
 import CTASection from "@/components/home/CTASection.astro";
+import JsonLd from "@/components/common/JsonLd.astro";
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://projectascp.org";
+
+const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Project ASCP",
+    url: siteUrl,
+    description: "Clean. Minimalist. Performance. The next generation Android Custom ROM experience focused on stability and essential enhancements.",
+    potentialAction: {
+        "@type": "SearchAction",
+        target: `${siteUrl}/devices?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+    },
+};
+
+const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Project ASCP",
+    url: siteUrl,
+    logo: `${siteUrl}/_astro/ASCP.C-UickHK_28hsoI.webp`,
+    sameAs: ["https://github.com/nicholasgasior/project-ascp"],
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+        {
+            "@type": "Question",
+            name: "What devices are supported?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "ASCP supports a range of devices across multiple brands. Head to the Devices page for the full list — each entry includes build status and maintainer info.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How does ASCP affect battery life?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Battery life depends on your kernel, usage patterns, and what's running in the background. Most users report performance on par with or better than stock.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "Is ASCP safe to use?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "ASCP ships with additional privacy toggles and merges upstream security patches within 24 hours of release. It passes SafetyNet and Play Integrity checks out of the box.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How do I install ASCP?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Download the build for your device from the Devices page, boot into a custom recovery (e.g. TWRP or OrangeFox), and flash the zip. Detailed step-by-step instructions are on each device's page.",
+            },
+        },
+    ],
+};
 ---
 
 <BaseLayout title="Project ASCP">
+    <JsonLd schema={websiteSchema} />
+    <JsonLd schema={organizationSchema} />
+    <JsonLd schema={faqSchema} />
     <HeroSection />
     <FeaturesSection />
     <StatsSection />

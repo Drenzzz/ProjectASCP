@@ -4,6 +4,18 @@ import PhilosophyCard from "@/components/about/PhilosophyCard.astro";
 import TeamSection from "@/components/about/TeamSection.astro";
 import Blob from "@/components/common/Blob.astro";
 import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
+import JsonLd from "@/components/common/JsonLd.astro";
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://projectascp.org";
+
+const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Project ASCP",
+    url: siteUrl,
+    description: "AOSP-based Android ROM built for performance and privacy. Clean, fast, and actively maintained — close to stock with the right additions.",
+    sameAs: ["https://github.com/nicholasgasior/project-ascp"],
+};
 
 const philosophyItems = [
     {
@@ -25,6 +37,7 @@ const philosophyItems = [
     title="Project ASCP | About"
     description="Learn more about the ASCP Project and the team behind it."
 >
+    <JsonLd schema={organizationSchema} />
     <div class="relative overflow-hidden w-full">
         <!-- Organic Blobs decoration -->
         <Blob class="-top-20 -right-20" size="w-80 h-80" opacity={0.06} duration={50} />

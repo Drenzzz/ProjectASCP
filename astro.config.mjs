@@ -3,9 +3,12 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
+import vercel from '@astrojs/vercel';
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
 
 export default defineConfig({
-  site: 'https://projectascp.org',
+  site: siteUrl,
   integrations: [react(), sitemap()],
   image: {
     remotePatterns: [
@@ -18,4 +21,5 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  adapter: vercel(),
 });

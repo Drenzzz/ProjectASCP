@@ -1,0 +1,17 @@
+name: Trigger Vercel Deploy
+
+on:
+  repository_dispatch:
+    types: [upstream-update]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */1 * * *"
+
+jobs:
+  deploy:
+    name: Trigger Vercel Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel Deploy Hook Data
+        run: |
+          curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"

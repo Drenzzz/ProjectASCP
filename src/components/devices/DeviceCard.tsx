@@ -56,9 +56,10 @@ const BRAND_THEMES: Record<
     },
 };
 
-function getBrandTheme(brandName: string) {
+function getBrandTheme(brandName: string): { bg: string; text: string; lightBg: string; accent: string } {
     const key = brandName.toLowerCase();
-    return BRAND_THEMES[key] || BRAND_THEMES.default;
+    const theme = BRAND_THEMES[key] ?? BRAND_THEMES["default"];
+    return theme!;
 }
 
 export function DeviceCard({

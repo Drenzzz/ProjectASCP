@@ -18,7 +18,7 @@ import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
 
         <div class="container mx-auto px-4 pt-28 pb-16 max-w-7xl space-y-12 relative z-10">
             {/* Row 1: Header Bento Card */}
-            <div class="bento-card w-full p-10 md:p-12 rounded-[32px] bg-[#f0f4f8] hover:bg-[#e4ebf3] hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row items-center justify-between gap-8 border-0 shadow-none relative overflow-hidden">
+            <div class="bento-card w-full p-10 md:p-12 rounded-[32px] bg-[#f0f4f8] hover:bg-[#e4ebf3] hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row items-center justify-between gap-8 border-0 shadow-none relative overflow-hidden" data-reveal>
                 <div class="space-y-4 max-w-2xl">
                     <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-extrabold bg-primary text-white tracking-wider select-none border-0">
                         System Changelog
@@ -39,34 +39,9 @@ import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
         </div>
 
         {/* Row 2: Accordion */}
-        <div class="w-full">
+        <div class="w-full" data-reveal data-reveal-delay="0.1">
             <ChangelogAccordion client:load data={changelogData} />
         </div>
     </div>
-
-    <script>
-        import { gsap } from "gsap";
-
-        gsap.fromTo(
-            ".bento-card",
-            { opacity: 0, y: 16 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.05,
-                ease: "power2.out",
-                clearProps: "transform",
-            }
-        );
-    </script>
-
-    <!-- CSS stylesheet block to prevent FOUC (Flash of Unstyled Content) -->
-    <style>
-        .bento-card {
-            opacity: 0;
-            transform: translateY(16px);
-        }
-    </style>
     </div>
 </BaseLayout>

@@ -1,7 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import { buttonVariants } from "@/components/ui/button";
 import Blob from "@/components/common/Blob.astro";
 import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
+import logoAscp from "@/assets/logo/ASCP.png";
 ---
 
 <section class="relative overflow-hidden min-h-[70vh] flex items-center py-24 md:py-32">
@@ -66,11 +68,12 @@ import SquiggleUnderline from "@/components/common/SquiggleUnderline.astro";
             <div class="flex justify-center md:justify-end" data-reveal data-reveal-delay="0.15">
                 <!-- Elevated card recipe — solid surface, no glow -->
                 <div class="relative bg-white rounded-3xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-shadow duration-300">
-                    <img
-                        src="/logo/ASCP.png"
+                    <Image
+                        src={logoAscp}
                         alt="ASCP Logo"
-                        width="220"
-                        height="220"
+                        width={220}
+                        height={220}
+                        format="webp"
                         class="h-44 w-44 md:h-56 md:w-56 rounded-2xl"
                     />
                     <!-- Doodle arrow accent -->

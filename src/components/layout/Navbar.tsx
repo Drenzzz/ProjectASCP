@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
+import logoNobg from "@/assets/logo/ASCP-nobg.png";
 
 interface NavLink {
     href: string;
@@ -72,7 +73,7 @@ export function Navbar() {
                         className="flex items-center gap-2 group transition-transform duration-200 active:scale-95"
                     >
                         <img
-                            src="/logo/ASCP-nobg.png"
+                            src={logoNobg as unknown as string}
                             alt="ASCP"
                             width="32"
                             height="32"
